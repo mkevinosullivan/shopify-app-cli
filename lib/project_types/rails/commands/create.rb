@@ -16,6 +16,8 @@ module Rails
         for our recommended method of installing ruby.
       MSG
 
+      DEFAULT_RAILS_FLAGS = %w(--skip-spring)
+
       options do |parser, flags|
         # backwards compatibility allow 'title' for now
         parser.on('--title=TITLE') { |t| flags[:title] = t }
@@ -23,6 +25,9 @@ module Rails
         parser.on('--organization_id=ID') { |url| flags[:organization_id] = url }
         parser.on('--shop_domain=MYSHOPIFYDOMAIN') { |url| flags[:shop_domain] = url }
         parser.on('--type=APPTYPE') { |url| flags[:type] = url }
+        parser.on('--db=DB') { |db| flags[:db] = db }
+        parser.on('--api') { flags[:api] = true }
+        parser.on('--rails-opts=RAILSOPTS') { |opts| flags[:rails_opts] = opts }
       end
 
       def call(args, _name)
@@ -84,7 +89,16 @@ module Rails
         end
 
         CLI::UI::Frame.open("Generating new rails app project in #{name}...") do
-          syscall(%W(rails new --skip-spring #{name}))
+          new_command = %w(rails new)
+          new_command << DEFAULT_RAILS_FLAGS
+          new_command << flags[:db] unless flags[:db].nil?
+          new_command << flags[:api] unless flags[:api].nil?
+          new_command << flags[:rails_opts] unless flags[:rails_opts].split.empty?
+          new_command << name
+
+          puts new_command
+
+          syscall(new_command)
         end
 
         @ctx.root = File.join(@ctx.root, name)
@@ -97,7 +111,7 @@ module Rails
           syscall(%w(bundle install))
         end
 
-        CLI::UI::Frame.open("Running shopfiy_app generator...") do
+        CLI::UI::Frame.open("Running shopify_app generator...") do
           begin
             syscall(%w(spring stop))
           rescue
