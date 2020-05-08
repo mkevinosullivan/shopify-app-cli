@@ -76,9 +76,6 @@ module Rails
             {{command:--app_url=APPURL}} App URL. Must be valid URL.
             {{command:--organization_id=ID}} App Org ID. Must be existing org ID.
             {{command:--shop_domain=MYSHOPIFYDOMAIN}} Test store URL. Must be existing test store.
-            {{command:--db=DB}}
-            {{command:--api}}
-            {{command:--rails-opts=RAILSOPTS}}
         HELP
       end
 
@@ -98,8 +95,6 @@ module Rails
           new_command << "--api" unless options.flags[:api].nil?
           new_command += options.flags[:rails_opts].split unless options.flags[:rails_opts].nil?
           new_command << name
-
-          puts new_command
 
           syscall(new_command)
         end
