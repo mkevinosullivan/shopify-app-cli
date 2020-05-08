@@ -75,7 +75,10 @@ module Rails
             {{command:--name=NAME}} App name. Any string.
             {{command:--app_url=APPURL}} App URL. Must be valid URL.
             {{command:--organization_id=ID}} App Org ID. Must be existing org ID.
-            {{command:--shop_domain=MYSHOPIFYDOMAIN }} Test store URL. Must be existing test store.
+            {{command:--shop_domain=MYSHOPIFYDOMAIN}} Test store URL. Must be existing test store.
+            {{command:--db=DB}}
+            {{command:--api}}
+            {{command:--rails-opts=RAILSOPTS}}
         HELP
       end
 
@@ -90,10 +93,10 @@ module Rails
 
         CLI::UI::Frame.open("Generating new rails app project in #{name}...") do
           new_command = %w(rails new)
-          new_command << DEFAULT_RAILS_FLAGS
-          new_command << flags[:db] unless flags[:db].nil?
-          new_command << flags[:api] unless flags[:api].nil?
-          new_command << flags[:rails_opts] unless flags[:rails_opts].split.empty?
+          new_command += DEFAULT_RAILS_FLAGS
+          new_command << "--database=#{options.flags[:db]}" unless options.flags[:db].nil?
+          new_command << "--api" unless options.flags[:api].nil?
+          new_command += options.flags[:rails_opts].split unless options.flags[:rails_opts].nil?
           new_command << name
 
           puts new_command
