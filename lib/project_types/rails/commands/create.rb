@@ -76,6 +76,9 @@ module Rails
             {{command:--app_url=APPURL}} App URL. Must be valid URL.
             {{command:--organization_id=ID}} App Org ID. Must be existing org ID.
             {{command:--shop_domain=MYSHOPIFYDOMAIN}} Test store URL. Must be existing test store.
+            {{command:--db=DB}} Database. Must be one of: mysql, postgresql, sqlite3, oracle, frontbase, ibm_db, sqlserver, jdbcmysql, jdbcsqlite3, jdbcpostgresql, jdbc.
+            {{command:--api}} For API only scaffolding.
+            {{command:--rails-opts=RAILSOPTS}} Additional flags. Must be valid Rails flag.
         HELP
       end
 
