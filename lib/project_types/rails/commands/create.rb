@@ -27,11 +27,7 @@ module Rails
         parser.on('--type=APPTYPE') { |url| flags[:type] = url }
         parser.on('--db=DB') { |db| flags[:db] = db }
         parser.on('--api') { flags[:api] = true }
-<<<<<<< HEAD
         parser.on('--rails_opts=RAILSOPTS') { |opts| flags[:rails_opts] = opts }
-=======
-        parser.on('--rails_opts=RAILSOPTS') { |opts| puts flags[:rails_opts] = opts }
->>>>>>> 985b312c5ff6ce31f919b740dd088809c2f71a6e
       end
 
       def call(args, _name)
