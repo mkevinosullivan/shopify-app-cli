@@ -27,7 +27,7 @@ module Rails
         parser.on('--type=APPTYPE') { |url| flags[:type] = url }
         parser.on('--db=DB') { |db| flags[:db] = db }
         parser.on('--api') { flags[:api] = true }
-        parser.on('--rails-opts=RAILSOPTS') { |opts| flags[:rails_opts] = opts }
+        parser.on('--rails_opts=RAILSOPTS') { |opts| puts flags[:rails_opts] = opts }
       end
 
       def call(args, _name)
@@ -78,7 +78,7 @@ module Rails
             {{command:--shop_domain=MYSHOPIFYDOMAIN}} Test store URL. Must be existing test store.
             {{command:--db=DB}} Database. Must be one of: mysql, postgresql, sqlite3, oracle, frontbase, ibm_db, sqlserver, jdbcmysql, jdbcsqlite3, jdbcpostgresql, jdbc.
             {{command:--api}} For API only scaffolding.
-            {{command:--rails-opts=RAILSOPTS}} Additional flags. Must be valid Rails flag.
+            {{command:--rails_opts=RAILSOPTS}} Additional flags. Must be valid Rails flag.
         HELP
       end
 
@@ -98,6 +98,8 @@ module Rails
           new_command << "--api" unless options.flags[:api].nil?
           new_command += options.flags[:rails_opts].split unless options.flags[:rails_opts].nil?
           new_command << name
+
+          puts new_command
 
           syscall(new_command)
         end
