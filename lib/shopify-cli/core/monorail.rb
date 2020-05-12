@@ -32,7 +32,7 @@ module ShopifyCli
                 result: (capture_result ? block_result.to_s : SUCCESS_SENTINEL)
               )
             )
-            return block_result
+            block_result
           rescue Exception => e # rubocop:disable Lint/RescueException
             end_time = Time.now.utc
             send_event(

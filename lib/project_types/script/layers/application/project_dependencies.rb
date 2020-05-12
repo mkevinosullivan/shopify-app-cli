@@ -12,18 +12,16 @@ module Script
           return ctx.puts("{{v}} Dependencies installed") if dep_manager.installed?
 
           unless CLI::UI::Frame.open("Installing dependencies with npm") do
-            begin
-              UI::StrictSpinner.spin('Dependencies installing') do |spinner|
-                dep_manager.install
-                spinner.update_title('Dependencies installed')
-              end
-              true
-            rescue Infrastructure::Errors::DependencyInstallError => e
-              CLI::UI::Frame.with_frame_color_override(:red) do
-                ctx.puts("\n#{e.message}")
-              end
-              false
+            UI::StrictSpinner.spin('Dependencies installing') do |spinner|
+              dep_manager.install
+              spinner.update_title('Dependencies installed')
             end
+            true
+                 rescue Infrastructure::Errors::DependencyInstallError => e
+                   CLI::UI::Frame.with_frame_color_override(:red) do
+                     ctx.puts("\n#{e.message}")
+                   end
+                   false
           end
             raise Infrastructure::Errors::DependencyInstallError
           end

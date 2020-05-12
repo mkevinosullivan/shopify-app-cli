@@ -36,14 +36,13 @@ module Script
       def self.help
         allowed_values = "{{cyan:discount}} and {{cyan:unit_limit_per_order}}"
         <<~HELP
-        {{command:#{ShopifyCli::TOOL_NAME} create script}}: Creates a script project.
-          Usage: {{command:#{ShopifyCli::TOOL_NAME} create script}}
-          Options:
-            {{command:--name=NAME}} Script project name. Any string.
-            {{command:--extension_point=TYPE}} Extension point name. Allowed values: #{allowed_values}.
+          {{command:#{ShopifyCli::TOOL_NAME} create script}}: Creates a script project.
+            Usage: {{command:#{ShopifyCli::TOOL_NAME} create script}}
+            Options:
+              {{command:--name=NAME}} Script project name. Any string.
+              {{command:--extension_point=TYPE}} Extension point name. Allowed values: #{allowed_values}.
         HELP
       end
     end
   end
 end
-

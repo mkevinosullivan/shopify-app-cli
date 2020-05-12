@@ -21,8 +21,8 @@ module Script
 
       def self.help
         <<~HELP
-        Runs unit tests on your script.
-          Usage: {{command:#{ShopifyCli::TOOL_NAME} test}}
+          Runs unit tests on your script.
+            Usage: {{command:#{ShopifyCli::TOOL_NAME} test}}
         HELP
       end
     end

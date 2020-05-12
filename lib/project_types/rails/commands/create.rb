@@ -64,13 +64,13 @@ module Rails
 
       def self.help
         <<~HELP
-        {{command:#{ShopifyCli::TOOL_NAME} create rails}}: Creates a ruby on rails app.
-          Usage: {{command:#{ShopifyCli::TOOL_NAME} create rails}}
-          Options:
-            {{command:--name=NAME}} App name. Any string.
-            {{command:--app_url=APPURL}} App URL. Must be valid URL.
-            {{command:--organization_id=ID}} App Org ID. Must be existing org ID.
-            {{command:--shop_domain=MYSHOPIFYDOMAIN }} Test store URL. Must be existing test store.
+          {{command:#{ShopifyCli::TOOL_NAME} create rails}}: Creates a ruby on rails app.
+            Usage: {{command:#{ShopifyCli::TOOL_NAME} create rails}}
+            Options:
+              {{command:--name=NAME}} App name. Any string.
+              {{command:--app_url=APPURL}} App URL. Must be valid URL.
+              {{command:--organization_id=ID}} App Org ID. Must be existing org ID.
+              {{command:--shop_domain=MYSHOPIFYDOMAIN }} Test store URL. Must be existing test store.
         HELP
       end
 
@@ -126,4 +126,3 @@ module Rails
     end
   end
 end
-

@@ -19,9 +19,9 @@ module Node
 
       def self.extended_help
         <<~HELP
-        {{bold:Subcommands:}}
-          {{cyan:heroku}}: Deploys the current Node project to Heroku.
-            Usage: {{command:#{ShopifyCli::TOOL_NAME} deploy heroku}}
+          {{bold:Subcommands:}}
+            {{cyan:heroku}}: Deploys the current Node project to Heroku.
+              Usage: {{command:#{ShopifyCli::TOOL_NAME} deploy heroku}}
         HELP
       end
     end
