@@ -99,8 +99,6 @@ module Rails
           new_command += options.flags[:rails_opts].split unless options.flags[:rails_opts].nil?
           new_command << name
 
-          puts new_command
-
           syscall(new_command)
         end
 
