@@ -50,19 +50,6 @@ end
 # but don't have binary compatibility with this ruby version.
 # Dev::Helpers::ChrubyReset.call(ENV)
 
-### THIS IS DEBUG, TO BE DELETED LATER
-puts "XDG_RUNTIME_DIR   : #{ENV.fetch('XDG_RUNTIME_DIR', 'not found')}"
-puts "HOME              : #{ENV.fetch('HOME')}"
-puts "ROOT              : #{ShopifyCli::ROOT}"
-puts "INSTALL_DIR       : #{ShopifyCli::INSTALL_DIR}"
-puts "PROJECT_TYPES_DIR : #{ShopifyCli::PROJECT_TYPES_DIR}"
-puts "CONFIG_HOME       : #{ShopifyCli::CONFIG_HOME}"
-puts "TOOL_CONFIG_PATH  : #{ShopifyCli::TOOL_CONFIG_PATH}"
-puts "TEMP_DIR          : #{ShopifyCli::TEMP_DIR}"
-puts "LOG_FILE          : #{ShopifyCli::LOG_FILE}"
-puts "DEBUG_LOG_FILE    : #{ShopifyCli::DEBUG_LOG_FILE}"
-puts "#{ShopifyCli::EMOJI} #{ShopifyCli::VERSION} #{ShopifyCli::FAILMOJI}"
-
 exit(ShopifyCli::ErrorHandler.call do
   ShopifyCli::Core::EntryPoint.call(ARGV.dup)
 end)
