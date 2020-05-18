@@ -4,7 +4,6 @@ ngrok*
 .bundle/*
 .DS_Store
 heroku
-*.gz
 .vagrant/
 *.log
 docs/_site/
