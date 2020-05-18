@@ -11,7 +11,6 @@ module Script
             extension_point = ExtensionPoints.get(type: extension_point_type)
             create_project(ctx, language, script_name, extension_point)
             script = create_definition(language, extension_point, script_name)
-            ShopifyCli::Core::Finalize.request_cd(script_name)
             script
           end
 

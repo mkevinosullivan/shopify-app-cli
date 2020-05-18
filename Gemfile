@@ -1,11 +1,14 @@
 # NOTE: These are development-only dependencies
 source "https://rubygems.org"
 
+# Specify your gem's dependencies in shopify-cli.gemspec
+gemspec
+
 # None of these can actually be used in a development copy of dev
 # They are all for CI and tests
 # `dev` uses no gems
 group :development, :test do
-  gem 'rake'
+  gem 'rake', '~> 12.3', '>= 12.3.3'
   gem 'pry-byebug'
   gem 'byebug'
   gem 'rubocop'

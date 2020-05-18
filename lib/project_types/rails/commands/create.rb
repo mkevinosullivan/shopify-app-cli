@@ -35,8 +35,6 @@ module Rails
         set_custom_ua
         ShopifyCli::Project.write(@ctx, 'rails')
 
-        ShopifyCli::Core::Finalize.request_cd(form.name)
-
         api_client = ShopifyCli::Tasks::CreateApiClient.call(
           @ctx,
           org_id: form.organization_id,

@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby --disable-gems
+
+module Kernel
+  # make an alias of the original require
+  alias_method :original_require, :require
+
+  # rewrite require
+  def require(name)
+    original_require(name)
+  rescue LoadError => e
+    # Special case for psych (yaml), which rescues this itself
+    raise if name == "#{RUBY_VERSION[/\d+\.\d+/]}/psych.so"
+    STDERR.puts "[Note] You cannot use gems in shopify-cli."
+    STDERR.puts "[LoadError] #{e.message}"
+    if ENV['DEBUG']
+      STDERR.puts e.backtrace
+      STDERR.puts "\n"
+    end
+    STDERR.puts "       They are disabled."
+    STDERR.puts "       If you are modifying /opt/shopify-cli, please don't."
+    STDERR.puts "       TODO with contribution instructions"
+    STDERR.puts "\n"
+    raise
+  end
+end
+
+lib_path = File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+
+ENV['SHELLPID'] ||= Process.ppid.to_s
+ENV['USER_PWD'] ||= Dir.pwd
+
+# Prune non-absolute paths from PATH to prevent non-deterministic behavior
+# i.e. If user has "." or "./bin" in their PATH
+# Note that this logic is duplicated in lib/shopify.rb
+ENV['PATH'] = ENV['PATH'].split(':').select { |p| p.start_with?('/', '~') }.join(':')
+
+$original_env = ENV.to_hash
+
+require 'shopify_cli'
+
+if ENV['PRINT_LOADED_FEATURES']
+  puts $LOADED_FEATURES
+end
+
+# before we've loaded any gems, unset the GEM_HOME etc.
+# this is important because we're specifically using /usr/bin/ruby.
+# Though we don't use gems here, it's not uncommon for other rubies
+# to install alternative json or yaml libraries that take precedence,
+# but don't have binary compatibility with this ruby version.
+# Dev::Helpers::ChrubyReset.call(ENV)
+
+### THIS IS DEBUG, TO BE DELETED LATER
+puts "XDG_RUNTIME_DIR   : #{ENV.fetch('XDG_RUNTIME_DIR', 'not found')}"
+puts "HOME              : #{ENV.fetch('HOME')}"
+puts "ROOT              : #{ShopifyCli::ROOT}"
+puts "INSTALL_DIR       : #{ShopifyCli::INSTALL_DIR}"
+puts "PROJECT_TYPES_DIR : #{ShopifyCli::PROJECT_TYPES_DIR}"
+puts "CONFIG_HOME       : #{ShopifyCli::CONFIG_HOME}"
+puts "TOOL_CONFIG_PATH  : #{ShopifyCli::TOOL_CONFIG_PATH}"
+puts "TEMP_DIR          : #{ShopifyCli::TEMP_DIR}"
+puts "LOG_FILE          : #{ShopifyCli::LOG_FILE}"
+puts "DEBUG_LOG_FILE    : #{ShopifyCli::DEBUG_LOG_FILE}"
+puts "#{ShopifyCli::EMOJI} #{ShopifyCli::VERSION} #{ShopifyCli::FAILMOJI}"
+
+exit(ShopifyCli::ErrorHandler.call do
+  ShopifyCli::Core::EntryPoint.call(ARGV.dup)
+end)
